@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content='width=device-width, initi'>
+        <title>Http video streaming</title>
+        <style>
+            body{
+                margin: 40px auto;
+                max-width: 650px;
+                background-color: #444 ;
+            }
+            .progress-bar{
+                margin-top: 25px;
+                width: 250px;
+                height: 35px;
+                border: 3px solid darkgreen;
+            }
+            .progress-bar-fill{
+                height: 100%;
+                width: 25%;
+                background:yellowgreen;
+                transition:width 0.25s;
+            }
+            .progress-bar-fill > span{
+                display: flex;
+                width:250px;
+                height: 100%;
+                justify-content: center;
+                align-items: center;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <form id='uploadForm' method="post" action="/" enctype="multipart/form-data">
+        <input id='inpFile' type="file" class='upload' name='uploaded'>
+        <input type="submit">
+        </form>
+        <div class="progress-bar">
+            <div class="progress-bar-fill">
+                <span class = "progress-bar-text">
+                    10%
+                </span>
+            </div>
+        </div>
+        <script>
+            const uploadForm = document.getElementById('uploadForm');
+            const inpFile = document.getElementById('inpFile');
+            const progressBarFill = document.querySelector('.progress-bar-fill');
+            const progressBarText = document.querySelector('.progress-bar-text');
+
+            //uploadForm.addEventListener('submit',uploadFile);
+
+
+            function uploadFile(e){
+            let reqListener = function(){
+                console.log(this.response);
+            }
+
+                e.preventDefault();
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST","/");
+                xhr.addEventListener('load',reqListener);
+                xhr.upload.addEventListener('progress',e=>{
+                    const percent =  e.lengthComputable ? (e.loaded / e.total)*100:0;
+                    progressBarFill.style.width = percent.toFixed(2)+'%';
+                    progressBarText.textContent = percent.toFixed(2)+'%'; 
+                });
+                xhr.setRequestHeader('Content-Type','multipart/form-data; boundary=----WebKitFormBoundaryBeYFybCTYqTJcP4B');
+                xhr.send(new FormData(uploadForm));
+            }
+            
+            function buttonClicked(){
+                console.log(document.querySelector('.upload'))
+                alert('file added');
+            }
+        </script>
+    </body>
+</html>
