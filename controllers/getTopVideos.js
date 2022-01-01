@@ -10,6 +10,7 @@ module.exports = (req,res)=>{
         files.forEach(function(filename){
             filesAvailable.push(filename);
         })
+        res.header('Access-Control-Allow-Origin','*');
         res.send({
             filesAvailable
         })
