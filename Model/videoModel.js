@@ -5,7 +5,8 @@ const videoSchema = mongoose.Schema({
     location:String,//userId/videoId/1.jpeg,1.mp4
     ratings:String,
     channelName:String,
-    userId:{ref:'User',type:mongoose.Schema.Types.objectId}
+    userId:{type:mongoose.Schema.Types.ObjectId,ref:'user'}
 });
 
 const videoModel = mongoose.model('video',videoSchema)
+module.exports = videoModel;
