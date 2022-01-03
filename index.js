@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const router = require('./router/routes')
 
+app.use(express.json())
 require('dotenv').config();
 //Database connection
 const mongoose = require('mongoose');
