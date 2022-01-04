@@ -7,6 +7,7 @@ const upload = require("../controllers/postController");
 const authenticationRoute = require("./authenticationRoute");
 const authenticate = require("../controllers/authenticate");
 const vidToDB = require("../controllers/vidToDB");
+const finalVideo = require("../controllers/finalVideo");
 router.use(authenticationRoute);
 
 router.post(
@@ -14,10 +15,7 @@ router.post(
   authenticate,
   vidToDB,
   upload.single("uploaded"),
-  function (req, res) {
-    console.log(req.body.user);
-    res.sendFile(path.resolve("./View/index.html"));
-  }
+  finalVideo
 );
 
 router.use(express.static(path.join(__dirname, "../View/")));

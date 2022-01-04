@@ -6,7 +6,6 @@ module.exports = async function (req, res, next) {
     userId: req.user.id,
   });
   req.videoQuery = video;
-
   //make a directory--------------
   await makeDir("./uploads/" + req.user.id + "/" + req.videoQuery.id);
   next();
